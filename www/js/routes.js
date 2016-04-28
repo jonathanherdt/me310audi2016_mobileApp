@@ -10,43 +10,53 @@ angular.module('app.routes', [])
     
   
 
-      .state('tabsController.cameraTabDefaultPage', {
-    url: '/page2',
+      .state('tabsController.users', {
+    url: '/users',
     views: {
       'tab1': {
-        templateUrl: 'templates/cameraTabDefaultPage.html',
-        controller: 'cameraTabDefaultPageCtrl'
+        templateUrl: 'templates/users.html',
+        controller: 'usersCtrl'
       }
     }
   })
 
-  .state('tabsController.cartTabDefaultPage', {
-    url: '/page3',
+  .state('tabsController.myDay', {
+    url: '/myday',
     views: {
       'tab2': {
-        templateUrl: 'templates/cartTabDefaultPage.html',
-        controller: 'cartTabDefaultPageCtrl'
-      }
-    }
-  })
-
-  .state('tabsController.cloudTabDefaultPage', {
-    url: '/page4',
-    views: {
-      'tab3': {
-        templateUrl: 'templates/cloudTabDefaultPage.html',
-        controller: 'cloudTabDefaultPageCtrl'
+        templateUrl: 'templates/myDay.html',
+        controller: 'myDayCtrl'
       }
     }
   })
 
   .state('tabsController', {
-    url: '/page1',
+    url: '/tabs',
     templateUrl: 'templates/tabsController.html',
     abstract:true
   })
 
-$urlRouterProvider.otherwise('/page1/page2')
+  .state('tabsController.userConfiguration', {
+    url: '/userconfig',
+    views: {
+      'tab1': {
+        templateUrl: 'templates/userConfiguration.html',
+        controller: 'userConfigurationCtrl'
+      }
+    }
+  })
+
+  .state('tabsController.transitOptions', {
+    url: '/transitoptions',
+    views: {
+      'tab4': {
+        templateUrl: 'templates/transitOptions.html',
+        controller: 'transitOptionsCtrl'
+      }
+    }
+  })
+
+$urlRouterProvider.otherwise('/tabs/users')
 
   
 
