@@ -23,7 +23,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services',
 })
 
 .factory('socket', function ($rootScope) {
-  var socket = io.connect();
+  var socket = io.connect("http://mtin.de:8080");
   return {
     on: function (eventName, callback) {
       socket.on(eventName, function () {
