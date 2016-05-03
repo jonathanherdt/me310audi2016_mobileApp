@@ -7,41 +7,83 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives'])
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
-  });
+.run(function ($ionicPlatform) {
+	$ionicPlatform.ready(function () {
+		// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+		// for form inputs)
+		if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+			cordova.plugins.Keyboard.disableScroll(true);
+		}
+		if (window.StatusBar) {
+			// org.apache.cordova.statusbar required
+			StatusBar.styleDefault();
+		}
+	});
 })
 
 .factory('socket', function ($rootScope) {
-  var socket = io.connect("http://mtin.de:8080");
-  return {
-    on: function (eventName, callback) {
-      socket.on(eventName, function () {
-        var args = arguments;
-        $rootScope.$apply(function () {
-          callback.apply(socket, args);
-        });
-      });
-    },
-    emit: function (eventName, data, callback) {
-      socket.emit(eventName, data, function () {
-        var args = arguments;
-        $rootScope.$apply(function () {
-          if (callback) {
-            callback.apply(socket, args);
-          }
-        });
-      })
-    }
-  };
+	function getLocalIdentifier() {
+		var cookie = getCookie("identifier");
+		if (cookie == "") {
+			document.cookie = "identifier=" + guid();
+		}
+		return getCookie("identifier");
+	}
+
+	function guid() {
+		function s4() {
+			return Math.floor((1 + Math.random()) * 0x10000)
+				.toString(16)
+				.substring(1);
+		}
+		return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+			s4() + '-' + s4() + s4() + s4();
+	}
+
+	function getLocalIdentifier() {
+		var cookie = getCookie("identifier");
+		if (cookie == "") {
+			document.cookie = "identifier=" + guid();
+		}
+		return getCookie("identifier");
+	}
+
+	function getCookie(cname) {
+		var name = cname + "=";
+		var ca = document.cookie.split(';');
+		for (var i = 0; i < ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0) == ' ') {
+				c = c.substring(1);
+			}
+			if (c.indexOf(name) == 0) {
+				return c.substring(name.length, c.length);
+			}
+		}
+		return "";
+	}
+
+	var socket = io.connect("http://mtin.de:8080", getLocalIdentifier());
+
+	return {
+		on: function (eventName, callback) {
+			socket.on(eventName, function () {
+				var args = arguments;
+				$rootScope.$apply(function () {
+					callback.apply(socket, args);
+				});
+			});
+		},
+		emit: function (eventName, data, callback) {
+			socket.emit(eventName, data, function () {
+				var args = arguments;
+				$rootScope.$apply(function () {
+					if (callback) {
+						callback.apply(socket, args);
+					}
+				});
+			})
+		}
+	};
 });
