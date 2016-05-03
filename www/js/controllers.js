@@ -5,7 +5,9 @@ angular.module('app.controllers', [])
 })
 
 .controller('myDayCtrl', function($scope) {
-
+    $scope.slideOptions = {
+        direction: 'vertical'
+    }
 })
 
 .controller('userConfigurationCtrl', function($scope) {

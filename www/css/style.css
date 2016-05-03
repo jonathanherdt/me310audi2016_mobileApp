@@ -1,0 +1,67 @@
+ .swiper-container {
+    width: auto;
+    height: 90vh;
+    /*margin: 20px auto;*/
+}
+.swiper-slide {
+
+}
+
+.swiper-pagination{
+    visibility: hidden;
+}
+
+.leave-card{
+    text-align: center;
+}
+
+.leave-card .preferred-transit-option{
+    font-size: 110px;
+}
+
+.leave-indicator{
+    padding: 5px 0;
+    margin: 0 10px;
+    border: 1px solid grey;
+    height: 32px;
+    border-radius: 4px;
+}
+
+.leave-indicator .time-left{
+    margin: -5px 0;
+    position: absolute;
+    background-color: red;
+    height: 30px;
+}
+
+.leave-indicator .time-left-text{
+    z-index: 1;
+}
+
+.leave-information{
+    text-align: left;
+}
+
+.leave-information .item{
+    white-space: normal;
+}
+
+.event-begin{
+
+}
+
+.trip-duration{
+
+}
+
+.longer-trip-duration-warning{
+
+}
+
+.transit-options .icon{
+    font-size: 70px;
+}
+
+.transit-options .time-indicator{
+    font-size: 24px;
+}

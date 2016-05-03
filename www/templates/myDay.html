@@ -1,3 +1,51 @@
 <ion-view title="My Day" id="page3">
-    <ion-content padding="true" class="has-header"></ion-content>
+    <ion-content class="has-header">
+        <ion-slides options="slideOptions" slider="data.slider">
+            <ion-slide-page class="leave-card">
+                <i class="preferred-transit-option icon ion-android-car"></i>
+                <div class="leave-indicator">
+                    <div class="time-left" style="width: 50%;">&nbsp;</div>
+                    <div class="time-left-text">Leave in {{time.remainingBeforeLeaving}} minutes</div>
+                </div>
+                <ul class="list card leave-information">
+                    <li class="item item-icon-left event-begin">
+                        <i class="icon ion-information-circled"></i>
+                        … to be at work in {{time.remainingBeforeEventBegins}} minutes
+                    </li>
+                    <li class="item item-icon-left trip-duration">
+                        <i class="icon ion-information-circled"></i>
+                        The trip will take {{time.tripDuration}} minutes
+                    </li>
+                    <li class="item item-icon-left longer-trip-duration-warning">
+                        <i class="icon ion-alert-circled"></i>
+                        There is a lot of traffic so it takes {{time.additionalTime}} minutes longer than usual
+                    </li>
+                </ul>
+                <div class="row transit-options">
+                    <div class="col transit-option">
+                        <i class="icon ion-android-bicycle"></i>
+                        <p class="time-indicator">10'</p>
+                    </div>
+                    <div class="col transit-option">
+                        <i class="icon ion-android-car"></i>
+                        <p class="time-indicator">1'</p>
+                    </div>
+                    <div class="col transit-option">
+                        <i class="icon ion-android-bus"></i>
+                        <p class="time-indicator">3'</p>
+                    </div>
+                    <div class="col transit-option">
+                        <i class="icon ion-android-walk"></i>
+                        <p class="time-indicator">-</p>
+                    </div>
+                </div>
+            </ion-slide-page>
+            <ion-slide-page>
+                <div class="box yellow"><h1>YELLOW</h1></div>
+            </ion-slide-page>
+            <ion-slide-page>
+                <div class="box pink"><h1>PINK</h1></div>
+            </ion-slide-page>
+        </ion-slides>
+    </ion-content>
 </ion-view>
