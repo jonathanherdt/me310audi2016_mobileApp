@@ -6,17 +6,20 @@ angular.module('app.controllers', [])
 	});
 
 	socket.emit('app - get users');
-	console.log('emitted');
 })
 
 .controller('myDayCtrl', function($scope) {
 
 })
 
-.controller('userConfigurationCtrl', function($scope) {
-    $scope.connectToGoogle = function(){
-        window.open('http://172.16.57.189:8080/', '_blank', 'location=no');
+.controller('userConfigurationCtrl', function($scope, socket) {
+	socket.emit('app - create new user');
+
+	socket.on('app - go to url', function(url) {
+		$scope.connectToGoogle = function(){
+        	window.open(url, '_blank', 'location=no');
     }
+	});
 })
 
 .controller('transitOptionsCtrl', function($scope) {
