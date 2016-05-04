@@ -13,13 +13,25 @@ angular.module('app.controllers', [])
 })
 
 .controller('userConfigurationCtrl', function($scope, socket) {
-	socket.emit('app - create new user');
 
 	socket.on('app - go to url', function(url) {
 		$scope.connectToGoogle = function(){
         	window.open(url, '_blank', 'location=no');
     }
 	});
+
+	socket.on('user authenticated', function (user) {
+		console.log('calendar connected: ' + user.name);
+	})
+
+	socket.on('user not authenticated', function (id) {
+		setTimeout(function () {
+			socket.emit('check login state');
+	    }, 1000);
+	})
+
+	socket.emit('app - create new user');
+	socket.emit('check login state');
 })
 
 .controller('transitOptionsCtrl', function($scope) {
