@@ -1,26 +1,14 @@
 <ion-view title="Users" id="page2">
     <ion-content padding="true" class="has-header">
         <ion-list>
-            <ion-item class="item-thumbnail-left">
-                <img src="img/LmyNciJISuiz2BttGAgS_Young_man_with_dimples.jpg">
-                <h2>Dad</h2>
-                <p></p>
+            <ion-item class="item-thumbnail-left" ng-repeat="(key, value) in users">
+                <img ng-src="{{value.picture}}">
+                <h2>{{value.name}}</h2>
+                <p>{{value.email}}</p>
+                <p>{{key}}</p>
             </ion-item>
         </ion-list>
-        <ion-list>
-            <ion-item class="item-thumbnail-left">
-                <img src="img/ZyXe13aTgKes3Z7Wp4uB_woman-composite.png">
-                <h2>Mom</h2>
-                <p></p>
-            </ion-item>
-        </ion-list>
-        <ion-list>
-            <ion-item class="item-thumbnail-left">
-                <img src="img/HKrnJNXWRKe0T0G9ALcK_amazing-beautiful-beauty-boy-boys-Favim.com-456374.jpg">
-                <h2>Tim</h2>
-                <p></p>
-            </ion-item>
-        </ion-list>
+        
         <a ui-sref="tabsController.userConfiguration" id="users-button1" class="button button-positive  button-block">Set Up New User</a>
     </ion-content>
 </ion-view>
