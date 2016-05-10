@@ -67,6 +67,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services',
 	var socket = io.connect("http://mtin.de:8080", {query: 'id=' + getLocalIdentifier() });
 
 	return {
+    getLocalIdentifier: getLocalIdentifier,
 		on: function (eventName, callback) {
 			socket.on(eventName, function () {
 				var args = arguments;

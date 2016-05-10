@@ -1,7 +1,7 @@
 <ion-view title="Users" id="page2">
     <ion-content padding="true" class="has-header">
         <ion-list>
-            <ion-item class="item-thumbnail-left" ng-repeat="(key, value) in users">
+            <ion-item ng-class="['item-thumbnail-left',localIdentifier === key ? 'highlighted' : '']" ng-repeat="(key, value) in users" ng-click="editUser(key)">
                 <img ng-src="{{value.picture}}">
                 <h2>{{value.name}}</h2>
                 <p>{{value.email}}</p>

@@ -1,6 +1,9 @@
 angular.module('app.controllers', [])
 
-.controller('usersCtrl', function($scope, socket) {
+.controller('usersCtrl', function($scope, socket, $state) {
+
+	$scope.localIdentifier = socket.getLocalIdentifier();
+
 	socket.on('user list', function(userlist) {
 		$scope.users = userlist
 	});
@@ -8,6 +11,12 @@ angular.module('app.controllers', [])
 	$scope.$on("$ionicView.enter", function(event, data){
 		socket.emit('app - get users');
 	});
+
+	$scope.editUser = function(key) {
+		if (key !== socket.getLocalIdentifier()) return;
+
+		$state.go("tabsController.userConfiguration");
+	}
 })
 
 .controller('myDayCtrl', function($scope) {

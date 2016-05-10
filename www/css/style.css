@@ -65,3 +65,7 @@
 .transit-options .time-indicator{
     font-size: 24px;
 }
+
+.item.highlighted {
+    background-color: #DDD;
+}
