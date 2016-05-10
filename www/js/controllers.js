@@ -18,14 +18,15 @@ angular.module('app.controllers', [])
 
 .controller('userConfigurationCtrl', function($scope, socket) {
 
+	$scope.loggedOnUser = "[none]"
+
 	socket.on('app - go to url', function(url) {
-		$scope.connectToGoogle = function(){
-        	window.open(url, '_blank', 'location=no');
-    }
+        window.open(url, '_blank', 'location=no');
+		socket.emit('check login state');
 	});
 
 	socket.on('user authenticated', function (user) {
-		console.log('calendar connected: ' + user.name);
+		$scope.loggedOnUser = user.name
 	})
 
 	socket.on('user not authenticated', function (id) {
@@ -34,8 +35,13 @@ angular.module('app.controllers', [])
 	    }, 1000);
 	})
 
-	socket.emit('app - create new user');
-	socket.emit('check login state');
+	$scope.$on("$ionicView.enter", function(event, data){
+		socket.emit('check login state');
+	});
+
+	$scope.connectToGoogle = function(primaryTransportation, secondaryTransportation){
+		socket.emit('app - create new user', [primaryTransportation, secondaryTransportation]);
+    }
 })
 
 .controller('transitOptionsCtrl', function($scope) {

@@ -1,35 +1,31 @@
 <ion-view title="User Configuration" id="page5">
     <ion-content padding="true" class="has-header">
         <form class="list">
-            <div>
-                <a style="display:block;" href="tel:">
-                    <img src="img/mQJxl90STy225fdGR77t_placeholder_person.jpg" width="100%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
-                </a>
-            </div>
-            <button id="userConfiguration-button7" class="button button-positive  button-block">Change Picture</button>
-            <button id="userConfiguration-button8" class="button button-positive  button-block" ng-click="connectToGoogle()">Connect to Google Calendar</button>
             <div class="spacer" style="width: 300px; height: 45px;"></div>
+            <label class="item">
+                <span class="input-label">Logged on User: </span>
+                <span class="input-label">{{loggedOnUser}}</span>
+            </label>
             <ion-item class="item-divider">Transit Options</ion-item>
             <label class="item item-select">
                 <span class="input-label">Primary</span>
-                <select>
-                    <option>Car</option>
-                    <option>Walk</option>
-                    <option>Uber</option>
-                    <option>Public Transport</option>
-                    <option>Bike</option>
+                <select name="primaryTransportation" ng-model="primaryTransportation">
+                  <option value="car">Car</option>
+                  <option value="walk">Walk</option>
+                  <option value="publictransport">Public Transport</option>
+                  <option value="bike">Bike</option>
                 </select>
             </label>
             <label class="item item-select">
                 <span class="input-label">Secondary</span>
-                <select>
-                    <option>Car</option>
-                    <option>Walk</option>
-                    <option>Uber</option>
-                    <option>Public Transport</option>
-                    <option>Bike</option>
+                <select name="secondaryTransportation" ng-model="secondaryTransportation">
+                  <option value="car">Car</option>
+                  <option value="walk">Walk</option>
+                  <option value="publictransport">Public Transport</option>
+                  <option value="bike">Bike</option>
                 </select>
             </label>
+            <button id="userConfiguration-button8" class="button button-positive  button-block" ng-click="connectToGoogle(primaryTransportation, secondaryTransportation)">Add/Switch User (will forward you to Google Login)</button>
         </form>
     </ion-content>
 </ion-view>
