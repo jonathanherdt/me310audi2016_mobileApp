@@ -10,11 +10,17 @@ angular.module('app.controllers', [])
 
 	$scope.$on("$ionicView.enter", function(event, data){
 		socket.emit('app - get users');
+		$scope.localIdentifier = socket.getLocalIdentifier();
 	});
 
 	$scope.editUser = function(key) {
-		if (key !== socket.getLocalIdentifier()) return;
+		//if (key !== socket.getLocalIdentifier()) return;
+		socket.setLocalIdentifier(key);	
+		$state.go("tabsController.userConfiguration");
+	}
 
+	$scope.newUser = function() {
+		socket.newLocalIdentifier();
 		$state.go("tabsController.userConfiguration");
 	}
 })

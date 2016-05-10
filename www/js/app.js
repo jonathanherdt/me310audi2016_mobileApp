@@ -23,6 +23,10 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services',
 })
 
 .factory('socket', function ($rootScope) {
+
+  var server = "http://mtin.de:8080";
+  var socket = io.connect(server, {query: 'id=' + getLocalIdentifier() });
+
 	function getLocalIdentifier() {
 		var cookie = getCookie("identifier");
 		if (cookie == "") {
@@ -49,6 +53,18 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services',
 		return getCookie("identifier");
 	}
 
+  function newLocalIdentifier() {
+    document.cookie = "identifier=" + guid();
+    socket = io.connect(server, {query: 'id=' + getLocalIdentifier() });
+    return getCookie("identifier");
+  }
+
+  function setLocalIdentifier(id) {
+    document.cookie = "identifier=" + id;
+    socket = io.connect(server, {query: 'id=' + getLocalIdentifier() });
+    return getCookie("identifier");
+  }
+
 	function getCookie(cname) {
 		var name = cname + "=";
 		var ca = document.cookie.split(';');
@@ -64,10 +80,10 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services',
 		return "";
 	}
 
-	var socket = io.connect("http://mtin.de:8080", {query: 'id=' + getLocalIdentifier() });
-
 	return {
     getLocalIdentifier: getLocalIdentifier,
+    newLocalIdentifier: newLocalIdentifier,
+    setLocalIdentifier: setLocalIdentifier,
 		on: function (eventName, callback) {
 			socket.on(eventName, function () {
 				var args = arguments;
