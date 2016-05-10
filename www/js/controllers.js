@@ -5,7 +5,9 @@ angular.module('app.controllers', [])
 		$scope.users = userlist
 	});
 
-	socket.emit('app - get users');
+	$scope.$on("$ionicView.enter", function(event, data){
+		socket.emit('app - get users');
+	});
 })
 
 .controller('myDayCtrl', function($scope) {
