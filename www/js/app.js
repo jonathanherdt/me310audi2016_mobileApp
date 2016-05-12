@@ -54,13 +54,12 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services',
 	}
 
   function newLocalIdentifier() {
-    document.cookie = "identifier=" + guid();
-    socket = io.connect(server, {query: 'id=' + getLocalIdentifier() });
-    return getCookie("identifier");
+    return setLocalIdentifier(guid());
   }
 
   function setLocalIdentifier(id) {
     document.cookie = "identifier=" + id;
+    console.log("reconnecting as: " + getLocalIdentifier());
     socket = io.connect(server, {query: 'id=' + getLocalIdentifier() });
     return getCookie("identifier");
   }

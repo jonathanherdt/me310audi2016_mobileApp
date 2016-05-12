@@ -6,6 +6,7 @@
                 <h2>{{value.name}}</h2>
                 <p>{{value.email}}</p>
                 <p>{{key}}</p>
+                <a ng-click="deleteUser(key); $event.stopPropagation();">Delete User</a>
             </ion-item>
         </ion-list>
         

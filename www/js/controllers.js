@@ -2,16 +2,20 @@ angular.module('app.controllers', [])
 
 .controller('usersCtrl', function($scope, socket, $state) {
 
+	function refreshView() {
+		$scope.localIdentifier = socket.getLocalIdentifier();
+		socket.on('user list', function(userlist) {
+			$scope.users = userlist
+		});
+		socket.emit('app - get users');
+		console.log("list refreshed as user " + $scope.localIdentifier);
+	}
+
 	$scope.localIdentifier = socket.getLocalIdentifier();
 
-	socket.on('user list', function(userlist) {
-		$scope.users = userlist
-	});
 
-	$scope.$on("$ionicView.enter", function(event, data){
-		socket.emit('app - get users');
-		$scope.localIdentifier = socket.getLocalIdentifier();
-	});
+
+	$scope.$on("$ionicView.enter", refreshView);
 
 	$scope.editUser = function(key) {
 		//if (key !== socket.getLocalIdentifier()) return;
@@ -22,6 +26,11 @@ angular.module('app.controllers', [])
 	$scope.newUser = function() {
 		socket.newLocalIdentifier();
 		$state.go("tabsController.userConfiguration");
+	}
+
+	$scope.deleteUser = function(id) {
+		socket.emit('delete user', id);
+		refreshView();
 	}
 })
 
