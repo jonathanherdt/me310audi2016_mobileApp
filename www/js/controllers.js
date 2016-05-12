@@ -40,23 +40,25 @@ angular.module('app.controllers', [])
     }
 })
 
-.controller('userConfigurationCtrl', function($scope, socket) {
+.controller('userConfigurationCtrl', function($scope, socket, $state) {
 
 	$scope.loggedOnUser = "[none]"
 
 	socket.on('app - go to url', function(url) {
         window.open(url, '_blank', 'location=no');
-		socket.emit('check login state');
 	});
 
 	socket.on('user authenticated', function (user) {
 		$scope.loggedOnUser = user.name
 	})
 
+	socket.on('new user authenticated', function (user) {
+		$scope.loggedOnUser = user.name
+		$state.go("tabsController.users");
+	})
+
 	socket.on('user not authenticated', function (id) {
-		setTimeout(function () {
-			socket.emit('check login state');
-	    }, 1000);
+		console.log('user not authenticated');
 	})
 
 	$scope.$on("$ionicView.enter", function(event, data){
