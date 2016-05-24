@@ -40,12 +40,7 @@ angular.module('app.controllers', [])
 		direction: 'vertical'
 	}
 
-	$scope.$on("$ionicView.enter", function (event, data) {
-		console.log('emitting event as ' + socket.getLocalIdentifier());
-		socket.emit('app - get calendar', Date.now());
-	});
-
-	socket.on('app - calendar', function (calendar) {
+	var receiveCalendarFunction = function (calendar) {
         // set the user data
         var userData = {
             picture: calendar.picture,
@@ -114,16 +109,13 @@ angular.module('app.controllers', [])
             	minutesLeft: nextEvent.event.start.getMinutes() % 60,
             	hoursLeft: nextEvent.event.start.getHours()
             };
-
-            console.log(userData);
-            console.log(nextEvent.event.transit_options);
-
-            userData.durationBy = {};
-
-            userData.durationBy['car'] = Math.round(nextEvent.event.transit_options['car'].duration);
-            userData.durationBy['subway'] = Math.round(nextEvent.event.transit_options['subway'].duration);
-            userData.durationBy['walk'] = Math.round(nextEvent.event.transit_options['walking'].duration);
-            userData.durationBy['bicycle'] = Math.round(nextEvent.event.transit_options['bicycle'].duration);	
+            
+            userData.durationBy = {
+	            car: Math.round(nextEvent.event.transit_options['car'].duration),
+	            subway: Math.round(nextEvent.event.transit_options['subway'].duration),
+	            walk: Math.round(nextEvent.event.transit_options['walking'].duration),
+	            bicycle: Math.round(nextEvent.event.transit_options['bicycle'].duration)
+			};
 
         } else {
             userData.title = '- No more events today -';
@@ -131,7 +123,15 @@ angular.module('app.controllers', [])
         
 
         $scope.userData = userData;
-    });
+    };
+
+
+	$scope.$on("$ionicView.enter", function (event, data) {
+		socket.on('app - calendar', receiveCalendarFunction);
+		socket.emit('app - get calendar', Date.now());
+	});
+
+	
 })
 
 
