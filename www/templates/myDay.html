@@ -2,41 +2,40 @@
     <ion-content class="has-header">
         <ion-slides options="slideOptions" slider="data.slider">
             <ion-slide-page class="leave-card">
-                <i class="preferred-transit-option icon ion-android-car"></i>
+                <i class="preferred-transit-option icon ion-android-{{transitTranslations[[userData.transit[0].type]]}}"></i>
                 <div class="leave-indicator">
-                    <div class="time-left" style="width: 50%;">&nbsp;</div>
-                    <div class="time-left-text">Leave in {{time.remainingBeforeLeaving}} minutes</div>
+                        <span ng-style="{'width': (userData.transit[0].hoursLeft > 0 ? 60 : userData.transit[0].minutesLeft) * 102 / 60 + '%'}" class="alert">Leave in {{userData.transit[0].hoursLeft}}:{{userData.transit[0].minutesLeft < 10 ? '0' : ''}}{{userData.transit[0].minutesLeft}}h ...</span>
                 </div>
                 <ul class="list card leave-information">
                     <li class="item item-icon-left event-begin">
                         <i class="icon ion-information-circled"></i>
-                        … to be at work in {{time.remainingBeforeEventBegins}} minutes
+                        … to be in time for {{userData.title}} at {{userData.startTime.hoursLeft}}:{{userData.startTime.minutesLeft < 10 ? '0' : ''}}{{userData.startTime.minutesLeft}}
                     </li>
                     <li class="item item-icon-left trip-duration">
                         <i class="icon ion-information-circled"></i>
-                        The trip will take {{time.tripDuration}} minutes
+                        The trip will take {{userData.durationBy[userData.transit[0].type]}} minutes by {{userData.transit[0].type}}
                     </li>
-                    <li class="item item-icon-left longer-trip-duration-warning">
+                    <!--<li class="item item-icon-left longer-trip-duration-warning">
                         <i class="icon ion-alert-circled"></i>
                         There is a lot of traffic so it takes {{time.additionalTime}} minutes longer than usual
-                    </li>
+                    </li>-->
                 </ul>
                 <div class="row transit-options">
                     <div class="col transit-option">
                         <i class="icon ion-android-bicycle"></i>
-                        <p class="time-indicator">10'</p>
+                        <p class="time-indicator">{{userData.durationBy['bicycle']}}'</p>
                     </div>
                     <div class="col transit-option">
                         <i class="icon ion-android-car"></i>
-                        <p class="time-indicator">1'</p>
+                        <p class="time-indicator">{{userData.durationBy['car']}}'</p>
                     </div>
                     <div class="col transit-option">
                         <i class="icon ion-android-bus"></i>
-                        <p class="time-indicator">3'</p>
+                        <p class="time-indicator">{{userData.durationBy['subway']}}'</p>
                     </div>
                     <div class="col transit-option">
                         <i class="icon ion-android-walk"></i>
-                        <p class="time-indicator">-</p>
+                        <p class="time-indicator">{{userData.durationBy['walk']}}'</p>
                     </div>
                 </div>
             </ion-slide-page>
