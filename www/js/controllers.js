@@ -43,9 +43,9 @@ angular.module('app.controllers', [])
 	$scope.$on("$ionicView.enter", function (event, data) {
 		socket.on('app - calendar', receivedCalendarFunction);
 		socket.on('user authenticated', receivedUserName);
-		var yesterday = new Date().setDate(new Date().getDate() - 1);
-		console.log(yesterday);
-		socket.emit('app - get calendar', {day: yesterday});
+		
+		console.log(moment().format());
+		socket.emit('app - get calendar', {day: moment().format()});
 		socket.emit('check login state');
 	});
 	
@@ -60,10 +60,8 @@ angular.module('app.controllers', [])
 
 		socket.emit('clock - event updated', data);
 
-		var yesterday = new Date().setDate(new Date().getDate() - 1);
-		console.log(yesterday);
-		socket.emit('app - get calendar', {day: yesterday});
-		socket.emit('app - get calendar', Date.now());
+		console.log(moment().format());
+		socket.emit('app - get calendar', {day: moment().format()});
 	}
 
 	var receivedUserName = function (user) {
