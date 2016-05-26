@@ -40,7 +40,38 @@ angular.module('app.controllers', [])
 		direction: 'vertical'
 	}
 
-	var receiveCalendarFunction = function (calendar) {
+	$scope.$on("$ionicView.enter", function (event, data) {
+		socket.on('app - calendar', receivedCalendarFunction);
+		socket.on('user authenticated', receivedUserName);
+		var yesterday = new Date().setDate(new Date().getDate() - 1);
+		console.log(yesterday);
+		socket.emit('app - get calendar', {day: yesterday});
+		socket.emit('check login state');
+	});
+	
+	$scope.adjustTransportationMethod = function (method, name, event) {
+
+		event.userSelectedTransitOption = method;
+
+		var data = {
+			name: name,
+			event: event
+		};
+
+		socket.emit('clock - event updated', data);
+
+		var yesterday = new Date().setDate(new Date().getDate() - 1);
+		console.log(yesterday);
+		socket.emit('app - get calendar', {day: yesterday});
+		socket.emit('app - get calendar', Date.now());
+	}
+
+	var receivedUserName = function (user) {
+		$scope.loggedOnUser = user.name
+	}
+
+	var receivedCalendarFunction = function (calendar) {
+		console.log(calendar);
         // set the user data
         var userData = {
             picture: calendar.picture,
@@ -61,7 +92,7 @@ angular.module('app.controllers', [])
 
         $scope.transitTranslations = {
 			car: 'car', 
-			walk: 'walk', 
+			walking: 'walk', 
 			subway: 'bus', 
 			bicycle:'bicycle'
 		}
@@ -113,25 +144,21 @@ angular.module('app.controllers', [])
             userData.durationBy = {
 	            car: Math.round(nextEvent.event.transit_options['car'].duration),
 	            subway: Math.round(nextEvent.event.transit_options['subway'].duration),
-	            walk: Math.round(nextEvent.event.transit_options['walking'].duration),
+	            walking: Math.round(nextEvent.event.transit_options['walking'].duration),
 	            bicycle: Math.round(nextEvent.event.transit_options['bicycle'].duration)
 			};
+
+			userData.event = nextEvent.event;
 
         } else {
             userData.title = '- No more events today -';
         }
         
-
         $scope.userData = userData;
+
     };
 
 
-	$scope.$on("$ionicView.enter", function (event, data) {
-		socket.on('app - calendar', receiveCalendarFunction);
-		socket.emit('app - get calendar', Date.now());
-	});
-
-	
 })
 
 

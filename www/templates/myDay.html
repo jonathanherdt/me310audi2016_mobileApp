@@ -1,4 +1,4 @@
-<ion-view title="My Day" id="page3">
+<ion-view title="{{loggedOnUser ? loggedOnUser + 's' : 'My'}} Day" id="page3">
     <ion-content class="has-header">
         <ion-slides options="slideOptions" slider="data.slider">
             <ion-slide-page class="leave-card">
@@ -21,21 +21,21 @@
                     </li>-->
                 </ul>
                 <div class="row transit-options">
-                    <div class="col transit-option">
+                    <div style="cursor: pointer" class="col transit-option" ng-click="adjustTransportationMethod('bicycle', loggedOnUser, userData.event);">
                         <i class="icon ion-android-bicycle"></i>
                         <p class="time-indicator">{{userData.durationBy['bicycle']}}'</p>
                     </div>
-                    <div class="col transit-option">
+                    <div style="cursor: pointer" class="col transit-option" ng-click="adjustTransportationMethod('car', loggedOnUser, userData.event);">
                         <i class="icon ion-android-car"></i>
                         <p class="time-indicator">{{userData.durationBy['car']}}'</p>
                     </div>
-                    <div class="col transit-option">
+                    <div style="cursor: pointer" class="col transit-option" ng-click="adjustTransportationMethod('subway', loggedOnUser, userData.event);">
                         <i class="icon ion-android-bus"></i>
                         <p class="time-indicator">{{userData.durationBy['subway']}}'</p>
                     </div>
-                    <div class="col transit-option">
+                    <div style="cursor: pointer" class="col transit-option" ng-click="adjustTransportationMethod('walking', loggedOnUser, userData.event);">
                         <i class="icon ion-android-walk"></i>
-                        <p class="time-indicator">{{userData.durationBy['walk']}}'</p>
+                        <p class="time-indicator">{{userData.durationBy['walking']}}'</p>
                     </div>
                 </div>
             </ion-slide-page>
