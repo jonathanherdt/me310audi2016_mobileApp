@@ -5,9 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives'])
+angular.module('app', ['ionic','ionic.service.core', 'app.controllers', 'app.routes', 'app.services', 'app.directives'])
 
-.run(function ($ionicPlatform) {
+.run(function ($ionicPlatform, socket) {
 	$ionicPlatform.ready(function () {
 		// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
 		// for form inputs)
@@ -19,7 +19,25 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services',
 			// org.apache.cordova.statusbar required
 			StatusBar.styleDefault();
 		}
+
+		var push = new Ionic.Push({
+			"debug": true
+		});
+
+		push.register(function(token) {
+			console.log("Device token:",token.token);
+			push.saveToken(token);  // persist the token in the Ionic Platform
+
+			socket.emit('CompanionApp - Device ID', token.token);
+
+			var div = document.getElementById('device_key');
+
+			div.innerHTML = div.innerHTML + token.token;
+
+
+		});
 	});
+
 })
 
 .factory('socket', function ($rootScope) {
